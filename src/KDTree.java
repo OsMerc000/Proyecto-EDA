@@ -26,12 +26,14 @@ public class KDTree {
                             aux_ptr = aux_ptr.getLeft();
                         } else {
                             aux_ptr.setLeft(new_nodo);
+                            return;
                         }
                     } else {
                         if (aux_ptr.getRight() != null) {
                             aux_ptr = aux_ptr.getRight();
                         } else {
                             aux_ptr.setRight(new_nodo);
+                            return;
                         }
                     }
                 } else {
@@ -40,12 +42,14 @@ public class KDTree {
                             aux_ptr = aux_ptr.getLeft();
                         } else {
                             aux_ptr.setLeft(new_nodo);
+                            return;
                         }
                     } else {
                         if (aux_ptr.getRight() != null) {
                             aux_ptr = aux_ptr.getRight();
                         } else {
                             aux_ptr.setRight(new_nodo);
+                            return;
                         }
                     }
                 }
