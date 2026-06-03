@@ -27,5 +27,16 @@ public class Nodo {
     }
     public void setRight(Nodo right) {
         this.right = right;
-    }    
+    }
+
+    @Override
+    public String toString() {
+        String s = "(Punto: " + this.punto;
+        s += ", Left: ";
+        if (this.left != null) {s += this.left.toString();} else {s += "None";}
+        s += ", Right: ";
+        if (this.right != null) {s += this.right.toString();} else {s += "None";}
+        s += ")";
+        return s;
+    }
 }

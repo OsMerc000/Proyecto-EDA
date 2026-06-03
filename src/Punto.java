@@ -30,4 +30,9 @@ public class Punto {
     public double distancia(Punto other) {
         return Math.sqrt(Math.pow(this.distanciaX(other), 2) + Math.pow(this.distanciaY(other), 2));
     }
+
+    @Override
+    public String toString() {
+        return "(" + this.x + ", " + this.y + ")";
+    }
 }

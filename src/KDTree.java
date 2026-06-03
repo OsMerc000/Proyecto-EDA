@@ -58,5 +58,12 @@ public class KDTree {
         }
     }
 
-    
+    @Override
+    public String toString() {
+        if (this.root == null) {
+            return "None";
+        } else {
+            return this.root.toString();
+        }
+    }
 }
