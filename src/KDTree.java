@@ -77,10 +77,32 @@ public class KDTree {
         if (currentNode.getPunto().equals(point)) {
             return currentNode.getPunto();
         }
-        if (currentNode.getPunto().getDistancia(point) < closestSoFar.getDistancia(point)) {
-            closestSoFar = currentNode.getPunto();
+        if (inX) {
+            if (point.getX() < currentNode.getPunto().getX()) {
+                closestSoFar = searchNearest(currentNode.getLeft(), closestSoFar, point, !inX);
+                if (currentNode.getPunto().getDistanciaX(point) < closestSoFar.getDistancia(point)) {
+                    closestSoFar = searchNearest(currentNode.getRight(), closestSoFar, point, !inX);
+                }
+            } else {
+                closestSoFar = searchNearest(currentNode.getRight(), closestSoFar, point, !inX);
+                if (currentNode.getPunto().getDistanciaX(point) < closestSoFar.getDistancia(point)) {
+                    closestSoFar = searchNearest(currentNode.getLeft(), closestSoFar, point, !inX);
+                }
+            }
+        } else {
+            if (point.getY() < currentNode.getPunto().getY()) {
+                closestSoFar = searchNearest(currentNode.getLeft(), closestSoFar, point, !inX);
+                if (currentNode.getPunto().getDistanciaX(point) < closestSoFar.getDistancia(point)) {
+                    closestSoFar = searchNearest(currentNode.getRight(), closestSoFar, point, !inX);
+                }
+            } else {
+                closestSoFar = searchNearest(currentNode.getRight(), closestSoFar, point, !inX);
+                if (currentNode.getPunto().getDistanciaX(point) < closestSoFar.getDistancia(point)) {
+                    closestSoFar = searchNearest(currentNode.getLeft(), closestSoFar, point, !inX);
+                }
+            }
         }
-        
+        return closestSoFar;
     }
 
     @Override
