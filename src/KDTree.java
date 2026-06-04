@@ -12,6 +12,10 @@ public class KDTree {
         this.root = root;
     }
 
+    public boolean isEmpty() {
+        return this.root == null;
+    }
+
     public void push(Punto punto) {
         Nodo aux_ptr = this.root;
         Nodo new_nodo = new Nodo(punto);
@@ -56,6 +60,52 @@ public class KDTree {
                 inX = !inX;
             }
         }
+    }
+
+    public Punto searchNearestPoint(Punto point) {
+        if (point == null || this.isEmpty()) {
+            return null;
+        } else {
+            return searchNearest(this.root, this.root.getPunto(), point, true);
+        }
+    }
+
+    private Punto searchNearest(Nodo currentNode, Punto closestSoFar, Punto point, boolean inX) {
+        if (currentNode == null) {
+            return closestSoFar;
+        }
+        if (currentNode.getPunto().equals(point)) {
+            return currentNode.getPunto();
+        }
+        if (currentNode.getPunto().getDistancia(point) < closestSoFar.getDistancia(point)) {
+            closestSoFar = currentNode.getPunto();
+        }
+        if (inX) {
+            if (point.getX() < currentNode.getPunto().getX()) {
+                closestSoFar = searchNearest(currentNode.getLeft(), closestSoFar, point, !inX);
+                if (currentNode.getPunto().getDistanciaX(point) < closestSoFar.getDistancia(point)) {
+                    closestSoFar = searchNearest(currentNode.getRight(), closestSoFar, point, !inX);
+                }
+            } else {
+                closestSoFar = searchNearest(currentNode.getRight(), closestSoFar, point, !inX);
+                if (currentNode.getPunto().getDistanciaX(point) < closestSoFar.getDistancia(point)) {
+                    closestSoFar = searchNearest(currentNode.getLeft(), closestSoFar, point, !inX);
+                }
+            }
+        } else {
+            if (point.getY() < currentNode.getPunto().getY()) {
+                closestSoFar = searchNearest(currentNode.getLeft(), closestSoFar, point, !inX);
+                if (currentNode.getPunto().getDistanciaY(point) < closestSoFar.getDistancia(point)) {
+                    closestSoFar = searchNearest(currentNode.getRight(), closestSoFar, point, !inX);
+                }
+            } else {
+                closestSoFar = searchNearest(currentNode.getRight(), closestSoFar, point, !inX);
+                if (currentNode.getPunto().getDistanciaY(point) < closestSoFar.getDistancia(point)) {
+                    closestSoFar = searchNearest(currentNode.getLeft(), closestSoFar, point, !inX);
+                }
+            }
+        }
+        return closestSoFar;
     }
 
     @Override

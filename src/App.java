@@ -10,6 +10,9 @@ public class App {
         tree.push(p2);
         tree.push(p3);
         tree.push(p4);
+        Punto p5 = new Punto(0, 0);
+        Punto closestToP5 = tree.searchNearestPoint(p5);
+        System.out.println("Closest point to the origin: " + closestToP5);
         System.out.println(tree);
     }
 }
