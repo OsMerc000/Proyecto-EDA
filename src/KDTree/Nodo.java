@@ -1,3 +1,5 @@
+package KDTree;
+
 public class Nodo {
     private Punto punto;
     private Nodo left;

@@ -1,3 +1,5 @@
+package KDTree;
+
 public class Punto {
     private double x;
     private double y;
@@ -41,9 +43,9 @@ public class Punto {
 
     public double getPositionFrom(Punto other, boolean inX) {
         if (inX) {
-            return this.x - other.x;
+            return this.x - other.x; //"other.x - this.x" Te odio, atte. 3h de mi vida;
         } else {
-            return this.y - other.y;
+            return this.y - other.y; //Y tú también;
         }
     }
 }

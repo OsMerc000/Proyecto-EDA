@@ -1,3 +1,5 @@
+package KDTree;
+
 public class KDTree {
     private Nodo root;
 
