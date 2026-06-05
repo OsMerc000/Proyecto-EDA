@@ -21,18 +21,29 @@ public class Punto {
         this.y = y;
     }
 
-    public double getDistanciaX(Punto other) {
+    public double getDistanceX(Punto other) {
         return Math.abs(this.x - other.x);
     }
-    public double getDistanciaY(Punto other) {
+    public double getDistanceY(Punto other) {
         return Math.abs(this.y - other.y);
     }
-    public double getDistancia(Punto other) {
-        return Math.sqrt(Math.pow(this.getDistanciaX(other), 2) + Math.pow(this.getDistanciaY(other), 2));
+    public double getDistance(Punto other) {
+        return Math.sqrt (
+            this.getDistanceX(other) * this.getDistanceX(other) + 
+            this.getDistanceY(other) * this.getDistanceY(other)
+        );
     }
 
     @Override
     public String toString() {
         return "(" + this.x + ", " + this.y + ")";
+    }
+
+    public double getPositionFrom(Punto other, boolean inX) {
+        if (inX) {
+            return this.x - other.x;
+        } else {
+            return this.y - other.y;
+        }
     }
 }
