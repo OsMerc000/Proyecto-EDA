@@ -2,7 +2,7 @@ package SegmentTree;
 
 public class SegmentTree {
     private Nodo<Integer> head;
-    private final int len;
+    private int len;
 
     public SegmentTree() {
         this.head = null;
@@ -15,6 +15,7 @@ public class SegmentTree {
 
     public void build(int arr[]) {
         this.head = build(arr, 0, arr.length - 1);
+        this.len = arr.length;
     }
 
     private Nodo<Integer> build(int arr[], int left, int right) {
