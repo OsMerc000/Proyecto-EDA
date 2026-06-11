@@ -8,6 +8,11 @@ public class SegmentTree {
         this.head = null;
         this.len = 0;
     }
+
+    public boolean isEmpty() {
+        return head == null;
+    }
+
     public SegmentTree(int arr[]) {
         this.head = build(arr, 0, arr.length - 1);
         this.len = arr.length;
