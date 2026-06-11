@@ -45,13 +45,13 @@ public class SegmentTree {
             return currentNode.getValue();
         } else {
             int middle = (currentLeft + currentRight)/2;
-            if (queryLeft > middle) {
+            if (queryRight <= middle) {
                 return query(currentNode.getLeft(), queryLeft, queryRight, currentLeft, middle);
-            } else if (queryRight <= middle) {
+            } else if (queryLeft > middle) {
                 return query(currentNode.getRight(), queryLeft, queryRight, middle + 1, currentRight);
             } else {
-                int left = query(currentNode.getLeft(), queryLeft, queryRight, currentLeft, middle);
-                int right = query(currentNode.getRight(), queryLeft, queryRight, middle + 1, currentRight);
+                int left = query(currentNode.getLeft(), queryLeft, middle, currentLeft, middle);
+                int right = query(currentNode.getRight(), middle + 1, queryRight, middle + 1, currentRight);
                 return left + right;
             }
         }
