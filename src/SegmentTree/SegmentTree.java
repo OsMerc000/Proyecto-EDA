@@ -4,9 +4,17 @@ public class SegmentTree {
     private Nodo<Integer> head;
     private final int len;
 
+    public SegmentTree() {
+        this.head = null;
+        this.len = 0;
+    }
     public SegmentTree(int arr[]) {
         this.head = build(arr, 0, arr.length - 1);
         this.len = arr.length;
+    }
+
+    public void build(int arr[]) {
+        this.head = build(arr, 0, arr.length - 1);
     }
 
     private Nodo<Integer> build(int arr[], int left, int right) {
