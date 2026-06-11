@@ -4,7 +4,7 @@ import KDTree.Punto;
 public class TestKDTree {
     public TestKDTree() {
         KDTree tree = new KDTree();
-        System.out.println(tree);
+        System.out.println("Tree:\n" + tree);
         Punto A = new Punto(4, 1);
         Punto B = new Punto(-1, 1);
         Punto C = new Punto(1, 6);
