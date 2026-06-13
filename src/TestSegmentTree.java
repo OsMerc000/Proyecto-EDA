@@ -20,7 +20,7 @@ public class TestSegmentTree {
         Punto p = new Punto(0, 0);
         SegmentTree tree = new SegmentTree(arr, p);
         System.out.println("Tree:\n" + tree);
-        System.out.println("arr[0] + ... + arr[13] = " + tree.query(0, 12));
+        System.out.println("arr[0] + ... + arr[12] = " + tree.query(0, 12));
         System.out.println("arr[0] + ... + arr[2] = " + tree.query(0, 2));
         System.out.println("arr[5] + ... + arr[7] = " + tree.query(5, 7));
         System.out.println("arr[2] + ... + arr[6] = " + tree.query(2, 6));
