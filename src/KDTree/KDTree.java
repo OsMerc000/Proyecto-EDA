@@ -2,18 +2,13 @@ package KDTree;
 
 public class KDTree {
     private Nodo root;
+    private int dim;
 
     public KDTree() {
         this.root = null;
+        this.dim = 0;
     }
-
-    public Nodo getRoot() {
-        return root;
-    }
-    public void setRoot(Nodo root) {
-        this.root = root;
-    }
-
+    
     public boolean isEmpty() {
         return this.root == null;
     }
