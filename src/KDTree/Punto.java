@@ -2,26 +2,20 @@ package KDTree;
 
 public class Punto {
     private double[] coordenadas;
-    private int dimension;
 
     public Punto(double[] coordenadas) {
         this.coordenadas = coordenadas;
-        this.dimension = coordenadas.length;
     }
 
     public double[] getCoordenadas() {
         return coordenadas;
     }
     public int getDimension() {
-        return dimension;
+        return coordenadas.length;
     }
 
     public void setCoordenadas(double[] coordenadas) {
         this.coordenadas = coordenadas;
-        this.dimension = coordenadas.length;
-    }
-    public void setDimension(int dimension) {
-        this.dimension = dimension;
     }
 
     public static Punto punto2D(double x, double y) {
@@ -34,32 +28,43 @@ public class Punto {
     }
 
     public double getDistanceInK(Punto other, int k) {
-        if (this.dimension != other.dimension) {
+        if (this.getDimension() != other.getDimension()) {
             new RuntimeException("The points do not have the same dimension.");
         }
-        if (k < 0 || k >= dimension) {
+        if (k <= 0 || k > this.getDimension()) {
             new RuntimeException("K is not a valid dimension.");
         }
-        return Math.abs(this.coordenadas[k] - other.coordenadas[k]);
+        return Math.abs(this.coordenadas[k - 1] - other.coordenadas[k - 1]);
     }
     
+    //Posible overflow; más especificamente, un arithmetic overflow.
+    //Buscar otro algoritmo que calcule, con una precisión aceptable, la distancia.
     public double getDistance(Punto other) {
-        if (this.dimension != other.dimension) {
+        if (this.getDimension() != other.getDimension()) {
             new RuntimeException("The points do not have the same dimension.");
         }
-        for (int i = 0; i < dimension; i++) {
-            
+        double sumOfSquares = 0;
+        for (int i = 1; i <= this.getDimension(); i++) {
+            sumOfSquares += getDistanceInK(other, i) * getDistanceInK(other, i);
         }
+        return Math.sqrt(sumOfSquares);
     }
 
     @Override
     public String toString() {
         String s = "(";
-        for (int i = 0; i < dimension - 1; i++) {
-            s += i + ": " + coordenadas[i] + ", ";
+        for (int i = 1; i < this.getDimension() - 1; i++) {
+            s += i + ": " + coordenadas[i - 1] + ", ";
         }
-        s += dimension - 1 + ": " + coordenadas[dimension - 1] + ")";
+        s += this.getDimension() + ": " + coordenadas[this.getDimension() - 1] + ")";
         return s;
+    }
+
+    public double getKValue(int k) {
+        if (k <= 0 || k > this.getDimension()) {
+            new RuntimeException("K is not a valid dimension.");
+        }
+        return coordenadas[k - 1];
     }
 
     // public double getPositionFrom(Punto other, boolean inX) {

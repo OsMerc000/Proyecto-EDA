@@ -2,11 +2,11 @@ package KDTree;
 
 public class KDTree {
     private Nodo root;
-    private int dim;
+    private int dimension;
 
     public KDTree() {
         this.root = null;
-        this.dim = 0;
+        this.dimension = 0;
     }
     
     public boolean isEmpty() {
@@ -14,34 +14,34 @@ public class KDTree {
     }
 
     public void push(Punto punto) {
-        Nodo new_nodo = new Nodo(punto);
+        Nodo newNode = new Nodo(punto);
         if (root == null) {
-            root = new_nodo;
+            root = newNode;
+            dimension = punto.getDimension();
         }  else {
-            node_push(root, true, new_nodo);
+            if (punto.getDimension() != dimension) {
+                new RuntimeException("Invalid point: Different dimension.");
+            }
+            pushNode(root, 1, newNode);
         }
     }
 
-    private Nodo node_push(Nodo current_node, boolean inX, Nodo new_node) {
-        if (current_node == null) {
-            return new_node;
+    private Nodo pushNode(Nodo currentNode, int KDim, Nodo newNode) {
+        if (currentNode == null) {
+            return newNode;
         }
 
-        if (inX) {
-            if (new_node.getPunto().getX() < current_node.getPunto().getX()) {
-                current_node.setLeft(node_push(current_node.getLeft(), !inX, new_node));
-            } else {
-                current_node.setRight(node_push(current_node.getRight(), !inX, new_node));
-            }
+        if (KDim > dimension) {
+            KDim = KDim - dimension;
+        }
+
+        if (newNode.getPunto().getKValue(KDim) < currentNode.getPunto().getKValue(KDim)) {
+            currentNode.setLeft(pushNode(currentNode.getLeft(), KDim + 1, newNode));
         } else {
-            if (new_node.getPunto().getY() < current_node.getPunto().getY()) {
-                current_node.setLeft(node_push(current_node.getLeft(), !inX, new_node));
-            } else {
-                current_node.setRight(node_push(current_node.getRight(), !inX, new_node));
-            }
+            currentNode.setRight(pushNode(currentNode.getRight(), KDim + 1, newNode));
         }
 
-        return current_node;
+        return currentNode;
     }
 
     public Punto getNearestPoint(Punto point) {
