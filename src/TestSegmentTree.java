@@ -15,5 +15,8 @@ public class TestSegmentTree {
         System.out.println("arr[0] + ... + arr[2] = " + tree.query(0, 2));
         System.out.println("arr[5] + ... + arr[7] = " + tree.query(5, 7));
         System.out.println("arr[2] + ... + arr[6] = " + tree.query(2, 6));
+        tree.update(2, 20);
+        tree.update(5, 100);
+        System.out.println(tree);
     }
 }

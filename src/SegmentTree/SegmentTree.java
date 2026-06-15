@@ -21,7 +21,7 @@ public class SegmentTree<T> {
         this.len = arr.length;
     }
 
-    public void update(T arr[], Associative<T> methodInT) {
+    public void rebuild(T arr[], Associative<T> methodInT) {
         this.methodInT = methodInT;
         this.head = build(arr, 0, arr.length - 1);
         this.len = arr.length;
@@ -79,7 +79,7 @@ public class SegmentTree<T> {
         }
     }
 
-    public void update(T value, int index) {
+    public void update(int index, T value) {
         if (index < 0 || index >= len) {
             new RuntimeException("Invalid index.");
         }
