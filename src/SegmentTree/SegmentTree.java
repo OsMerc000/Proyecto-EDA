@@ -70,4 +70,28 @@ public class SegmentTree {
             }
         }
     }
+
+    public void update(Integer value, int index) {
+        if (index < 0 || index >= len) {
+            new RuntimeException("Invalid index.");
+        }
+        update(value, index, 0, len - 1, head);
+    }
+
+    private Integer update(Integer value, int index, int left, int right, Nodo<Integer> nodo) {
+        if (left == right) {
+            nodo.setValue(value);
+            return value;
+        } else {
+            int middle = (left + right) / 2;
+            Integer branchValue;
+            if (index <= middle) {
+                branchValue = update(value, index, left, middle, nodo.getLeft()) + nodo.getRight().getValue();
+            } else {
+                branchValue = nodo.getLeft().getValue() + update(value, index, middle + 1, right, nodo.getRight());
+            }
+            nodo.setValue(branchValue);
+            return branchValue;
+        }
+    }
 }
