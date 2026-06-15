@@ -27,14 +27,14 @@ public class Punto {
         return new Punto(coordenadas);
     }
 
-    public double getDistanceInK(Punto other, int k) {
+    public double getDistanceInK(Punto other, int kDim) {
         if (this.getDimension() != other.getDimension()) {
             new RuntimeException("The points do not have the same dimension.");
         }
-        if (k <= 0 || k > this.getDimension()) {
+        if (kDim <= 0 || kDim > this.getDimension()) {
             new RuntimeException("K is not a valid dimension.");
         }
-        return Math.abs(this.coordenadas[k - 1] - other.coordenadas[k - 1]);
+        return Math.abs(this.coordenadas[kDim - 1] - other.coordenadas[kDim - 1]);
     }
     
     //Posible overflow; más especificamente, un arithmetic overflow.
@@ -53,18 +53,28 @@ public class Punto {
     @Override
     public String toString() {
         String s = "(";
-        for (int i = 1; i < this.getDimension() - 1; i++) {
+        for (int i = 1; i < this.getDimension(); i++) {
             s += i + ": " + coordenadas[i - 1] + ", ";
         }
         s += this.getDimension() + ": " + coordenadas[this.getDimension() - 1] + ")";
         return s;
     }
 
-    public double getKValue(int k) {
-        if (k <= 0 || k > this.getDimension()) {
+    public double getKValue(int kDim) {
+        if (kDim <= 0 || kDim > this.getDimension()) {
             new RuntimeException("K is not a valid dimension.");
         }
-        return coordenadas[k - 1];
+        return coordenadas[kDim - 1];
+    }
+
+    public double getRelativePositionInKDim(Punto other, int kDim) {
+        if (this.getDimension() != other.getDimension()) {
+            new RuntimeException("The points do not have the same dimension.");
+        }
+        if (kDim <= 0 || kDim > this.getDimension()) {
+            new RuntimeException("K is not a valid dimension.");
+        }
+        return this.coordenadas[kDim - 1] - other.coordenadas[kDim - 1];
     }
 
     // public double getPositionFrom(Punto other, boolean inX) {

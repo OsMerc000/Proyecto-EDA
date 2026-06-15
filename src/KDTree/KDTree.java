@@ -8,6 +8,16 @@ public class KDTree {
         this.root = null;
         this.dimension = 0;
     }
+    public KDTree(Punto punto) {
+        this.root = new Nodo(punto);
+        this.dimension = punto.getDimension();
+    }
+    public KDTree(Punto[] puntos) {
+        this.root = null;
+        for (int i = 0; i < puntos.length; i++) {
+            this.push(puntos[i]);
+        }
+    }
     
     public boolean isEmpty() {
         return this.root == null;
@@ -26,19 +36,19 @@ public class KDTree {
         }
     }
 
-    private Nodo pushNode(Nodo currentNode, int KDim, Nodo newNode) {
+    private Nodo pushNode(Nodo currentNode, int kDim, Nodo newNode) {
         if (currentNode == null) {
             return newNode;
         }
 
-        if (KDim > dimension) {
-            KDim = KDim - dimension;
+        if (kDim > dimension) {
+            kDim = kDim - dimension;
         }
 
-        if (newNode.getPunto().getKValue(KDim) < currentNode.getPunto().getKValue(KDim)) {
-            currentNode.setLeft(pushNode(currentNode.getLeft(), KDim + 1, newNode));
+        if (newNode.getPunto().getKValue(kDim) < currentNode.getPunto().getKValue(kDim)) {
+            currentNode.setLeft(pushNode(currentNode.getLeft(), kDim + 1, newNode));
         } else {
-            currentNode.setRight(pushNode(currentNode.getRight(), KDim + 1, newNode));
+            currentNode.setRight(pushNode(currentNode.getRight(), kDim + 1, newNode));
         }
 
         return currentNode;
@@ -48,43 +58,65 @@ public class KDTree {
         if (point == null || this.isEmpty()) {
             return null;
         } else {
-            return getNearest(this.root, this.root.getPunto(), point, true);
+            return getNearest(this.root, this.root.getPunto(), point, 1);
         }
     }
 
-    private Punto getNearest(Nodo currentNode, Punto closestSoFar, Punto point, boolean inX) {
+    private Punto getNearest(Nodo currentNode, Punto closestSoFar, Punto point, int kDim) {
         if (currentNode == null) {
-            //System.out.println("NULL/UP");
             return closestSoFar;
         }
+
         if (currentNode.getPunto().equals(point)) {
             return currentNode.getPunto();
         }
+
         if (currentNode.getPunto().getDistance(point) < closestSoFar.getDistance(point)) {
             closestSoFar = currentNode.getPunto();
-            //System.out.println("CHANGE");
         }
-        double positionRespectoAlCurrentNode = point.getPositionFrom(currentNode.getPunto(), inX);
-        if (positionRespectoAlCurrentNode < 0) {
-            //System.out.println("LEFT");
-            closestSoFar = getNearest(currentNode.getLeft(), closestSoFar, point, !inX);
-            if (Math.abs(positionRespectoAlCurrentNode) < closestSoFar.getDistance(point)) {
-                //System.out.println("SWITCH/RIGHT");
-                closestSoFar = getNearest(currentNode.getRight(), closestSoFar, point, !inX);
+
+        if (kDim > dimension) {
+            kDim = kDim - dimension;
+        }
+
+        if (point.getRelativePositionInKDim(currentNode.getPunto(), kDim) < 0) {
+            closestSoFar = getNearest(currentNode.getLeft(), closestSoFar, point, kDim + 1);
+            if (Math.abs(point.getRelativePositionInKDim(currentNode.getPunto(), kDim)) < closestSoFar.getDistance(point)) {
+                closestSoFar = getNearest(currentNode.getRight(), closestSoFar, point, kDim + 1);
             }
         } else {
-            //System.out.println("RIGHT");
-            closestSoFar = getNearest(currentNode.getRight(), closestSoFar, point, !inX);
-            //System.out.println("PSL " + positionRespectoAlCurrentNode);
-            //System.out.println("CSFD: " + closestSoFar.getDistance(point));
-            if (Math.abs(positionRespectoAlCurrentNode) < closestSoFar.getDistance(point)) {
-                //System.out.println("SWITCH/LEFT");
-                closestSoFar = getNearest(currentNode.getLeft(), closestSoFar, point, !inX);
+            closestSoFar = getNearest(currentNode.getRight(), closestSoFar, point, kDim + 1);
+            if (Math.abs(point.getRelativePositionInKDim(currentNode.getPunto(), kDim)) < closestSoFar.getDistance(point)) {
+                closestSoFar = getNearest(currentNode.getLeft(), closestSoFar, point, kDim + 1);
             }
         }
-        //System.out.println("UP");
+
         return closestSoFar;
     }
+
+    // private Punto getNearest(Nodo currentNode, Punto closestSoFar, Punto point, boolean inX) {
+    //     
+    //     double positionRespectoAlCurrentNode = point.getPositionFrom(currentNode.getPunto(), inX);
+    //     if (positionRespectoAlCurrentNode < 0) {
+    //         //System.out.println("LEFT");
+    //         closestSoFar = getNearest(currentNode.getLeft(), closestSoFar, point, !inX);
+    //         if (Math.abs(positionRespectoAlCurrentNode) < closestSoFar.getDistance(point)) {
+    //             //System.out.println("SWITCH/RIGHT");
+    //             closestSoFar = getNearest(currentNode.getRight(), closestSoFar, point, !inX);
+    //         }
+    //     } else {
+    //         //System.out.println("RIGHT");
+    //         closestSoFar = getNearest(currentNode.getRight(), closestSoFar, point, !inX);
+    //         //System.out.println("PSL " + positionRespectoAlCurrentNode);
+    //         //System.out.println("CSFD: " + closestSoFar.getDistance(point));
+    //         if (Math.abs(positionRespectoAlCurrentNode) < closestSoFar.getDistance(point)) {
+    //             //System.out.println("SWITCH/LEFT");
+    //             closestSoFar = getNearest(currentNode.getLeft(), closestSoFar, point, !inX);
+    //         }
+    //     }
+    //     //System.out.println("UP");
+    //     return closestSoFar;
+    // }
 
     @Override
     public String toString() {

@@ -3,8 +3,6 @@ import KDTree.Punto;
 
 public class TestKDTree {
     public TestKDTree() {
-        KDTree tree = new KDTree();
-        System.out.println("Tree:\n" + tree);
         Punto[] puntos = {
             Punto.punto2D(4, 1),
             Punto.punto2D(-1, 1),
@@ -20,9 +18,10 @@ public class TestKDTree {
             Punto.punto2D(0, -1),
             Punto.punto2D(2.87, 4.1),
         };
+        KDTree tree = new KDTree(puntos);
+        System.out.println(tree);
         Punto p = Punto.punto2D(0, 0);
         Punto closestToP = tree.getNearestPoint(p);
         System.out.println("Closest point to the origin: " + closestToP);
-        System.out.println(tree);
     }
 }
