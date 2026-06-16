@@ -28,10 +28,7 @@ public class TestKDTree {
     public TestKDTree() {
         Punto[] puntos = generarPuntos(15, 5);
         mostrarPuntos(puntos);
-        KDTree tree = new KDTree();
-        for (int i = 0; i < puntos.length; i++) {
-            tree.push(puntos[i]);
-        }
+        KDTree tree = new KDTree(puntos);
         // System.out.println("Tree:\n" + tree);
         // Punto A = new Punto(4, 1);
         // Punto B = new Punto(-1, 1);
