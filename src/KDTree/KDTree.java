@@ -7,11 +7,11 @@ public class KDTree {
         this.root = null;
     }
 
-    public Nodo getRoot() {
-        return root;
-    }
-    public void setRoot(Nodo root) {
-        this.root = root;
+    public KDTree(Punto[] puntos) {
+        this.root = null;
+        for (int i = 0; i < puntos.length; i++) {
+            this.push(puntos[i]);
+        }
     }
 
     public boolean isEmpty() {
