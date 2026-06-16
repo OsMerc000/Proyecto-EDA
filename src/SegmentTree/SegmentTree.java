@@ -84,4 +84,34 @@ public class SegmentTree {
             }
         }
     }
+
+    public void update(int index, Punto punto) {
+        if (index < 0 || index >= len) {
+            new RuntimeException("Invalid indexes.");
+        }
+        update(index, punto, 0, len - 1, head);
+    }
+
+    private Punto update(int index, Punto punto, int left, int right, Nodo<Punto> currentNode) {
+        if (left == right) {
+            currentNode.setValue(punto);
+        } else {
+            int middle = (left + right) / 2;
+            Punto leftPoint;
+            Punto rightPoint;
+            if (index < middle) {
+                leftPoint = update(index, punto, left, middle, currentNode.getLeft());
+                rightPoint = currentNode.getRight().getValue();
+            } else {
+                leftPoint = currentNode.getLeft().getValue();
+                rightPoint = update(index, punto, middle + 1, right, currentNode.getRight());
+            }
+            if (this.punto.getDistance(leftPoint) < this.punto.getDistance(rightPoint)) {
+                currentNode.setValue(leftPoint);
+            } else {
+                currentNode.setValue(rightPoint);
+            }
+        }
+        return currentNode.getValue();
+    }
 }
